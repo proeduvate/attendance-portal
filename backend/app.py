@@ -13,7 +13,8 @@ from routes import audit_routes
 
 app = FastAPI()
 
-# CORS FIX (VERY IMPORTANT)
+
+# CORS FIX
 app.add_middleware(
 
     CORSMiddleware,
@@ -28,7 +29,8 @@ app.add_middleware(
 
 )
 
-# ROUTERS
+
+# ROUTES
 app.include_router(auth_routes.router)
 app.include_router(intern_routes.router)
 app.include_router(attendance_routes.router)
@@ -41,7 +43,7 @@ def home():
 
     return {
 
-        "message":"Smart Intern Attendance System API Running"
+        "message":"Smart Intern Attendance System Running"
 
     }
 
@@ -59,13 +61,19 @@ def create_admin():
 
         users_collection.insert_one({
 
-        "email":"admin@proeduvate.com",
+            "email":"admin@proeduvate.com",
 
-        "password":hash_password("Admin@123"),
+            "password":hash_password("Admin@123"),
 
-        "role":"HR_ADMIN"
+            "role":"HR_ADMIN"
 
         })
+
+        print("Default Admin Created")
+
+    else:
+
+        print("Admin already exists")
 
 
 create_admin()
