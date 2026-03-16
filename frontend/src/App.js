@@ -7,6 +7,7 @@ import Upload from "./pages/Upload"
 import Calendar from "./pages/Calendar"
 import Patterns from "./pages/Patterns"
 import Audit from "./pages/Audit"
+import Profile from "./pages/Profile"
 
 function App(){
 
@@ -29,6 +30,8 @@ return(
 <Route path="/patterns" element={<Patterns/>}/>
 
 <Route path="/audit" element={<Audit/>}/>
+
+<Route path="/profile/:id" element={<Profile/>}/>
 
 </Routes>
 
