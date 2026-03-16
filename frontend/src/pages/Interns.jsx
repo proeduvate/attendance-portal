@@ -2,6 +2,7 @@ import {useEffect,useState} from "react"
 import axios from "axios"
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
+import {Link} from "react-router-dom"
 
 export default function Interns(){
 
@@ -225,7 +226,27 @@ filtered.map((i,index)=>(
 
 <td>{i.intern_id}</td>
 
-<td>{i.name}</td>
+<td>
+
+<Link
+
+to={"/profile/"+i.intern_id}
+
+style={{
+
+color:"#8b5cf6",
+
+textDecoration:"none"
+
+}}
+
+>
+
+{i.name}
+
+</Link>
+
+</td>
 
 <td>{i.department}</td>
 
