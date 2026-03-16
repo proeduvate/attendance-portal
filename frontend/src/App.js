@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard"
 import Interns from "./pages/Interns"
 import Upload from "./pages/Upload"
 import Calendar from "./pages/Calendar"
+import Patterns from "./pages/Patterns"
 
 function App(){
 
@@ -23,6 +24,8 @@ return(
 <Route path="/upload" element={<Upload/>}/>
 
 <Route path="/calendar" element={<Calendar/>}/>
+
+<Route path="/patterns" element={<Patterns/>}/>
 
 </Routes>
 
