@@ -3,6 +3,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import Interns from "./pages/Interns"
+import Upload from "./pages/Upload"
 
 function App(){
 
@@ -17,6 +18,8 @@ return(
 <Route path="/dashboard" element={<Dashboard/>}/>
 
 <Route path="/interns" element={<Interns/>}/>
+
+<Route path="/upload" element={<Upload/>}/>
 
 </Routes>
 
