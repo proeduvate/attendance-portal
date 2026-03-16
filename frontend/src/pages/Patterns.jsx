@@ -1,6 +1,9 @@
 import {useEffect,useState} from "react"
 import axios from "axios"
 import Sidebar from "../components/Sidebar"
+import Navbar from "../components/Navbar"
+import {motion} from "framer-motion"
+import {warn} from "../components/Notify"
 
 export default function Patterns(){
 
@@ -9,12 +12,20 @@ const[data,setData]=useState([])
 useEffect(()=>{
 
 axios.get(
+
 "http://127.0.0.1:8000/patterns"
+
 )
 
 .then(res=>{
 
 setData(res.data)
+
+if(res.data.length>0){
+
+warn("Risk interns detected")
+
+}
 
 })
 
@@ -27,11 +38,13 @@ return(
 
 <Sidebar/>
 
-<div style={container}>
+<div style={main}>
+
+<Navbar/>
 
 <h1>
 
-Attendance Patterns
+Attendance Risk Patterns
 
 </h1>
 
@@ -41,7 +54,21 @@ Attendance Patterns
 
 data.map((p,index)=>(
 
-<div key={index} style={card}>
+<motion.div
+
+key={index}
+
+initial={{opacity:0,y:40}}
+
+animate={{opacity:1,y:0}}
+
+transition={{duration:0.4}}
+
+whileHover={{scale:1.05}}
+
+style={card}
+
+>
 
 <h3>
 
@@ -51,17 +78,23 @@ data.map((p,index)=>(
 
 <p>
 
-Absences : {p.absent_count}
+Intern ID : {p.intern_id}
 
 </p>
 
 <p>
 
-Status : Risk
+Absences : {p.absent_count}
 
 </p>
 
-</div>
+<p style={risk}>
+
+Status : High Risk
+
+</p>
+
+</motion.div>
 
 ))
 
@@ -77,19 +110,19 @@ Status : Risk
 
 }
 
-const container={
+const main={
 
-marginLeft:"260px",
+marginLeft:"250px",
 
-padding:"40px",
+width:"100%",
 
 background:"#0D1117",
 
-height:"100vh",
+minHeight:"100vh",
 
 color:"white",
 
-width:"100%"
+padding:"30px"
 
 }
 
@@ -109,10 +142,17 @@ const card={
 
 background:"linear-gradient(135deg,#ef4444,#7f1d1d)",
 
-padding:"20px",
+padding:"25px",
 
-borderRadius:"10px",
+borderRadius:"12px",
 
-boxShadow:"0px 0px 10px black"
+boxShadow:"0px 0px 15px black"
 
+}
+
+const risk={
+
+marginTop:"10px",
+
+fontWeight:"bold"
 }
