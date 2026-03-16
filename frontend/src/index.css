@@ -1,0 +1,41 @@
+.react-calendar{
+
+background:#020617;
+
+color:white;
+
+border:none;
+
+padding:20px;
+
+}
+
+.present{
+
+background:#22c55e !important;
+
+color:white !important;
+
+border-radius:6px;
+
+}
+
+.absent{
+
+background:#ef4444 !important;
+
+color:white !important;
+
+border-radius:6px;
+
+}
+
+.leave{
+
+background:#f59e0b !important;
+
+color:white !important;
+
+border-radius:6px;
+
+}
