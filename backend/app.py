@@ -9,12 +9,13 @@ from routes import intern_routes
 from routes import attendance_routes
 from routes import upload_routes
 from routes import audit_routes
+from routes import report_routes
 
 
 app = FastAPI()
 
 
-# CORS FIX
+# CORS CONFIGURATION
 app.add_middleware(
 
     CORSMiddleware,
@@ -30,15 +31,22 @@ app.add_middleware(
 )
 
 
-# ROUTES
+# ROUTERS
 app.include_router(auth_routes.router)
+
 app.include_router(intern_routes.router)
+
 app.include_router(attendance_routes.router)
+
 app.include_router(upload_routes.router)
+
 app.include_router(audit_routes.router)
+
+app.include_router(report_routes.router)
 
 
 @app.get("/")
+
 def home():
 
     return {
@@ -48,7 +56,7 @@ def home():
     }
 
 
-# CREATE DEFAULT ADMIN
+# CREATE DEFAULT ADMIN USER
 def create_admin():
 
     admin = users_collection.find_one({
