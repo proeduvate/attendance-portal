@@ -6,6 +6,7 @@ import Interns from "./pages/Interns"
 import Upload from "./pages/Upload"
 import Calendar from "./pages/Calendar"
 import Patterns from "./pages/Patterns"
+import Audit from "./pages/Audit"
 
 function App(){
 
@@ -26,6 +27,8 @@ return(
 <Route path="/calendar" element={<Calendar/>}/>
 
 <Route path="/patterns" element={<Patterns/>}/>
+
+<Route path="/audit" element={<Audit/>}/>
 
 </Routes>
 
