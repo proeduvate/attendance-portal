@@ -14,7 +14,10 @@ const[stats,setStats]=useState({
 
 present:0,
 absent:0,
-leave:0
+leave:0,
+attendance_percent:0,
+reliability:0,
+risk:"SAFE"
 
 })
 
@@ -48,29 +51,19 @@ setStats(res.data)
 },[id])
 
 
-let total=
+const getRiskColor=()=>{
 
-stats.present+
+if(stats.risk==="SAFE")
 
-stats.absent+
+return "#22c55e"
 
-stats.leave
+if(stats.risk==="WARNING")
 
+return "#f59e0b"
 
-let percent=
+return "#ef4444"
 
-total?
-
-Math.round(
-
-(stats.present/total)*100
-
-):0
-
-
-let reliability=
-
-100-(stats.absent*10)
+}
 
 
 return(
@@ -135,16 +128,46 @@ Leave : {stats.leave}
 
 <div style={statPurple}>
 
-Attendance % : {percent}%
+Attendance % : {stats.attendance_percent}%
 
 </div>
 
 </div>
 
 
-<div style={score}>
+<div style={scoreBox}>
 
-Reliability Score : {reliability}
+<h2>
+
+Reliability Score
+
+</h2>
+
+<h1>
+
+{stats.reliability}
+
+</h1>
+
+<div style={{
+
+background:getRiskColor(),
+
+padding:"10px",
+
+borderRadius:"6px",
+
+width:"150px",
+
+textAlign:"center",
+
+marginTop:"10px"
+
+}}>
+
+{stats.risk}
+
+</div>
 
 </div>
 
@@ -235,15 +258,13 @@ borderRadius:"10px"
 
 }
 
-const score={
+const scoreBox={
 
 marginTop:"30px",
 
 background:"#1e293b",
 
-padding:"25px",
+padding:"30px",
 
-borderRadius:"10px",
-
-fontSize:"20px"
+borderRadius:"10px"
 }
