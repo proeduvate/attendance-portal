@@ -1,6 +1,8 @@
 import {useState} from "react"
 import axios from "axios"
 import Sidebar from "../components/Sidebar"
+import Navbar from "../components/Navbar"
+import {success,error} from "../components/Notify"
 
 export default function Upload(){
 
@@ -10,7 +12,7 @@ const upload=async()=>{
 
 if(!file){
 
-alert("Select file")
+error("Please select a file")
 
 return
 
@@ -19,6 +21,8 @@ return
 let form=new FormData()
 
 form.append("file",file)
+
+try{
 
 await axios.post(
 
@@ -29,14 +33,22 @@ form,
 {
 
 headers:{
+
 "Content-Type":"multipart/form-data"
+
 }
 
 }
 
 )
 
-alert("Attendance Uploaded")
+success("Attendance uploaded successfully")
+
+}catch{
+
+error("Upload failed")
+
+}
 
 }
 
@@ -46,7 +58,9 @@ return(
 
 <Sidebar/>
 
-<div style={container}>
+<div style={main}>
+
+<Navbar/>
 
 <h1>
 
@@ -80,7 +94,7 @@ style={button}
 
 >
 
-Upload
+Upload Attendance
 
 </button>
 
@@ -94,19 +108,19 @@ Upload
 
 }
 
-const container={
+const main={
 
-marginLeft:"260px",
+marginLeft:"250px",
 
-padding:"40px",
+width:"100%",
 
 background:"#0D1117",
 
-height:"100vh",
+minHeight:"100vh",
 
 color:"white",
 
-width:"100%"
+padding:"30px"
 
 }
 
@@ -120,7 +134,9 @@ width:"400px",
 
 borderRadius:"10px",
 
-marginTop:"30px"
+marginTop:"30px",
+
+boxShadow:"0px 0px 15px black"
 
 }
 
@@ -146,6 +162,7 @@ color:"white",
 
 cursor:"pointer",
 
-width:"100%"
+width:"100%",
 
+borderRadius:"8px"
 }
