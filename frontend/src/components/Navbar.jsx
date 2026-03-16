@@ -1,4 +1,6 @@
 import {motion} from "framer-motion"
+import {FaBell} from "react-icons/fa"
+import {info} from "./Notify"
 
 export default function Navbar(){
 
@@ -7,6 +9,12 @@ const logout=()=>{
 localStorage.removeItem("token")
 
 window.location="/"
+
+}
+
+const showAlert=()=>{
+
+info("No new alerts")
 
 }
 
@@ -21,6 +29,20 @@ HR Dashboard
 </h2>
 
 <div style={right}>
+
+<motion.div
+
+whileHover={{scale:1.2}}
+
+onClick={showAlert}
+
+style={bell}
+
+>
+
+<FaBell/>
+
+</motion.div>
 
 <motion.div
 whileHover={{scale:1.05}}
@@ -73,6 +95,18 @@ display:"flex",
 alignItems:"center",
 
 gap:"20px"
+
+}
+
+const bell={
+
+background:"#0f172a",
+
+padding:"10px",
+
+borderRadius:"6px",
+
+cursor:"pointer"
 
 }
 
