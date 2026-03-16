@@ -1,4 +1,5 @@
 import Sidebar from "../components/Sidebar"
+import {motion} from "framer-motion"
 
 export default function Dashboard(){
 
@@ -8,21 +9,7 @@ return(
 
 <Sidebar/>
 
-<div style={{
-
-marginLeft:"260px",
-
-background:"#0D1117",
-
-height:"100vh",
-
-color:"white",
-
-padding:"40px",
-
-width:"100%"
-
-}}>
+<div style={container}>
 
 <h1>
 
@@ -30,25 +17,51 @@ Dashboard
 
 </h1>
 
-<div style={{
+<div style={grid}>
 
-display:"grid",
+<motion.div
+style={cardGreen}
+whileHover={{scale:1.08}}
+initial={{opacity:0}}
+animate={{opacity:1}}
+>
 
-gridTemplateColumns:"repeat(4,1fr)",
+Present
 
-gap:"20px",
+</motion.div>
 
-marginTop:"30px"
+<motion.div
+style={cardRed}
+whileHover={{scale:1.08}}
+initial={{opacity:0}}
+animate={{opacity:1}}
+>
 
-}}>
+Absent
 
-<div style={cardGreen}>Present</div>
+</motion.div>
 
-<div style={cardRed}>Absent</div>
+<motion.div
+style={cardYellow}
+whileHover={{scale:1.08}}
+initial={{opacity:0}}
+animate={{opacity:1}}
+>
 
-<div style={cardYellow}>Leave</div>
+Leave
 
-<div style={cardPurple}>Patterns</div>
+</motion.div>
+
+<motion.div
+style={cardPurple}
+whileHover={{scale:1.08}}
+initial={{opacity:0}}
+animate={{opacity:1}}
+>
+
+Patterns
+
+</motion.div>
 
 </div>
 
@@ -60,26 +73,86 @@ marginTop:"30px"
 
 }
 
+const container={
+
+marginLeft:"260px",
+
+padding:"40px",
+
+background:"#0D1117",
+
+height:"100vh",
+
+color:"white",
+
+width:"100%"
+
+}
+
+const grid={
+
+display:"grid",
+
+gridTemplateColumns:"repeat(4,1fr)",
+
+gap:"20px",
+
+marginTop:"30px"
+
+}
+
 const cardGreen={
+
 background:"linear-gradient(90deg,#22c55e,#4ade80)",
-padding:"20px",
-borderRadius:"10px"
+
+padding:"30px",
+
+borderRadius:"10px",
+
+textAlign:"center",
+
+fontSize:"18px"
+
 }
 
 const cardRed={
+
 background:"linear-gradient(90deg,#ef4444,#f87171)",
-padding:"20px",
-borderRadius:"10px"
+
+padding:"30px",
+
+borderRadius:"10px",
+
+textAlign:"center",
+
+fontSize:"18px"
+
 }
 
 const cardYellow={
+
 background:"linear-gradient(90deg,#f59e0b,#fbbf24)",
-padding:"20px",
-borderRadius:"10px"
+
+padding:"30px",
+
+borderRadius:"10px",
+
+textAlign:"center",
+
+fontSize:"18px"
+
 }
 
 const cardPurple={
+
 background:"linear-gradient(90deg,#6366f1,#8b5cf6)",
-padding:"20px",
-borderRadius:"10px"
+
+padding:"30px",
+
+borderRadius:"10px",
+
+textAlign:"center",
+
+fontSize:"18px"
+
 }
