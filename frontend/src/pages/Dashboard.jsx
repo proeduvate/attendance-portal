@@ -1,4 +1,5 @@
 import Sidebar from "../components/Sidebar"
+import Navbar from "../components/Navbar"
 import {motion} from "framer-motion"
 
 export default function Dashboard(){
@@ -9,57 +10,59 @@ return(
 
 <Sidebar/>
 
-<div style={container}>
+<div style={main}>
 
-<h1>
+<Navbar/>
 
-Dashboard
+<h1 style={{marginTop:"20px"}}>
+
+Dashboard Overview
 
 </h1>
 
 <div style={grid}>
 
 <motion.div
-style={cardGreen}
-whileHover={{scale:1.08}}
-initial={{opacity:0}}
-animate={{opacity:1}}
+style={card}
+whileHover={{scale:1.06}}
 >
 
-Present
+<h2>42</h2>
+
+<p>Present Today</p>
 
 </motion.div>
 
 <motion.div
 style={cardRed}
-whileHover={{scale:1.08}}
-initial={{opacity:0}}
-animate={{opacity:1}}
+whileHover={{scale:1.06}}
 >
 
-Absent
+<h2>5</h2>
+
+<p>Absent</p>
 
 </motion.div>
 
 <motion.div
 style={cardYellow}
-whileHover={{scale:1.08}}
-initial={{opacity:0}}
-animate={{opacity:1}}
+whileHover={{scale:1.06}}
 >
 
-Leave
+<h2>3</h2>
+
+<p>Leave</p>
 
 </motion.div>
 
 <motion.div
 style={cardPurple}
-whileHover={{scale:1.08}}
-initial={{opacity:0}}
-animate={{opacity:1}}
+whileHover={{scale:1.06}}
 >
 
-Patterns
+<h2>2</h2>
+
+<p>Risk Interns</p>
 
 </motion.div>
 
@@ -73,19 +76,17 @@ Patterns
 
 }
 
-const container={
+const main={
 
-marginLeft:"260px",
+marginLeft:"250px",
 
-padding:"40px",
+width:"100%",
 
 background:"#0D1117",
 
-height:"100vh",
+minHeight:"100vh",
 
-color:"white",
-
-width:"100%"
+color:"white"
 
 }
 
@@ -95,64 +96,48 @@ display:"grid",
 
 gridTemplateColumns:"repeat(4,1fr)",
 
-gap:"20px",
+gap:"25px",
 
-marginTop:"30px"
+padding:"30px"
 
 }
 
-const cardGreen={
+const card={
 
-background:"linear-gradient(90deg,#22c55e,#4ade80)",
+background:"linear-gradient(135deg,#22c55e,#15803d)",
 
 padding:"30px",
 
-borderRadius:"10px",
-
-textAlign:"center",
-
-fontSize:"18px"
+borderRadius:"12px"
 
 }
 
 const cardRed={
 
-background:"linear-gradient(90deg,#ef4444,#f87171)",
+background:"linear-gradient(135deg,#ef4444,#7f1d1d)",
 
 padding:"30px",
 
-borderRadius:"10px",
-
-textAlign:"center",
-
-fontSize:"18px"
+borderRadius:"12px"
 
 }
 
 const cardYellow={
 
-background:"linear-gradient(90deg,#f59e0b,#fbbf24)",
+background:"linear-gradient(135deg,#f59e0b,#78350f)",
 
 padding:"30px",
 
-borderRadius:"10px",
-
-textAlign:"center",
-
-fontSize:"18px"
+borderRadius:"12px"
 
 }
 
 const cardPurple={
 
-background:"linear-gradient(90deg,#6366f1,#8b5cf6)",
+background:"linear-gradient(135deg,#6366f1,#312e81)",
 
 padding:"30px",
 
-borderRadius:"10px",
-
-textAlign:"center",
-
-fontSize:"18px"
+borderRadius:"12px"
 
 }
