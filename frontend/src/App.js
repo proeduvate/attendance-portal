@@ -9,11 +9,15 @@ import Patterns from "./pages/Patterns"
 import Audit from "./pages/Audit"
 import Profile from "./pages/Profile"
 
+import Notify from "./components/Notify"
+
 function App(){
 
 return(
 
 <BrowserRouter>
+
+<Notify/>
 
 <Routes>
 
