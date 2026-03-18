@@ -30,8 +30,6 @@ def dashboard_stats():
 
     today=datetime.now().date()
 
-    yesterday=today-timedelta(days=1)
-
     week=today-timedelta(days=7)
 
     month=today-timedelta(days=30)
@@ -39,11 +37,7 @@ def dashboard_stats():
 
     def count(date_from):
 
-        data=list(
-
-            attendance_collection.find()
-
-        )
+        data=list(attendance_collection.find())
 
         present=0
         absent=0
@@ -84,23 +78,59 @@ def dashboard_stats():
         }
 
 
-    today_data=count(today)
-
-    yesterday_data=count(yesterday)
-
-    week_data=count(week)
-
-    month_data=count(month)
-
-
     return{
 
-        "today":today_data,
+        "week":count(week),
 
-        "yesterday":yesterday_data,
-
-        "week":week_data,
-
-        "month":month_data
+        "month":count(month)
 
     }
+
+
+@router.get("/attendance_trend")
+
+def trend():
+
+    data=list(attendance_collection.find())
+
+    result={}
+
+    for d in data:
+
+        date=d["date"]
+
+        if date not in result:
+
+            result[date]={
+
+                "present":0,
+
+                "absent":0
+
+            }
+
+        if d["status"]=="PRESENT":
+
+            result[date]["present"]+=1
+
+        if d["status"]=="ABSENT":
+
+            result[date]["absent"]+=1
+
+
+    final=[]
+
+    for k in sorted(result.keys()):
+
+        final.append({
+
+            "date":k,
+
+            "present":result[k]["present"],
+
+            "absent":result[k]["absent"]
+
+        })
+
+    return final
+    
