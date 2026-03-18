@@ -12,26 +12,24 @@ from routes import audit_routes
 from routes import report_routes
 
 
-app = FastAPI()
+app=FastAPI()
 
 
-# CORS CONFIGURATION
 app.add_middleware(
 
-    CORSMiddleware,
+CORSMiddleware,
 
-    allow_origins=["*"],
+allow_origins=["*"],
 
-    allow_credentials=True,
+allow_credentials=True,
 
-    allow_methods=["*"],
+allow_methods=["*"],
 
-    allow_headers=["*"],
+allow_headers=["*"]
 
 )
 
 
-# ROUTERS
 app.include_router(auth_routes.router)
 
 app.include_router(intern_routes.router)
@@ -49,21 +47,21 @@ app.include_router(report_routes.router)
 
 def home():
 
-    return {
+    return{
 
-        "message":"Smart Intern Attendance System Running"
+        "message":"System Running"
 
     }
 
 
-# CREATE DEFAULT ADMIN USER
 def create_admin():
 
-    admin = users_collection.find_one({
+    admin=users_collection.find_one({
 
         "email":"admin@proeduvate.com"
 
     })
+
 
     if admin is None:
 
@@ -76,12 +74,6 @@ def create_admin():
             "role":"HR_ADMIN"
 
         })
-
-        print("Default Admin Created")
-
-    else:
-
-        print("Admin already exists")
 
 
 create_admin()
