@@ -12,6 +12,10 @@ const[filtered,setFiltered]=useState([])
 const[search,setSearch]=useState("")
 const[deptFilter,setDeptFilter]=useState("")
 
+const[currentPage,setCurrentPage]=useState(1)
+
+const itemsPerPage=10
+
 const[name,setName]=useState("")
 const[dept,setDept]=useState("")
 const[id,setId]=useState("")
@@ -49,6 +53,8 @@ i.department===deptFilter
 }
 
 setFiltered(data)
+
+setCurrentPage(1)
 
 },[search,deptFilter,interns])
 
@@ -89,15 +95,10 @@ await axios.post(
 {
 
 intern_id:id,
-
 name:name,
-
 department:dept,
-
 email:"hr@test.com",
-
 phone:"999999",
-
 mentor:"HR"
 
 }
@@ -113,6 +114,15 @@ alert("Failed to add intern")
 }
 
 }
+
+
+const lastIndex=currentPage*itemsPerPage
+
+const firstIndex=lastIndex-itemsPerPage
+
+const currentData=filtered.slice(firstIndex,lastIndex)
+
+const totalPages=Math.ceil(filtered.length/itemsPerPage)
 
 
 return(
@@ -141,6 +151,7 @@ onChange={(e)=>setSearch(e.target.value)}
 style={input}
 
 />
+
 
 <select
 
@@ -229,7 +240,7 @@ Add Intern
 
 {
 
-filtered.length===0?
+currentData.length===0?
 
 <tr>
 
@@ -241,7 +252,7 @@ No interns found
 
 :
 
-filtered.map((i,index)=>(
+currentData.map((i,index)=>(
 
 <tr key={index} style={row}>
 
@@ -278,6 +289,48 @@ style={nameLink}
 </tbody>
 
 </table>
+
+
+<div style={pagination}>
+
+<button
+
+onClick={()=>setCurrentPage(currentPage-1)}
+
+disabled={currentPage===1}
+
+style={pageBtn}
+
+>
+
+Prev
+
+</button>
+
+
+<span style={pageText}>
+
+Page {currentPage} / {totalPages || 1}
+
+</span>
+
+
+<button
+
+onClick={()=>setCurrentPage(currentPage+1)}
+
+disabled={currentPage===totalPages}
+
+style={pageBtn}
+
+>
+
+Next
+
+</button>
+
+</div>
+
 
 </div>
 
@@ -413,6 +466,40 @@ padding:"20px",
 textAlign:"center",
 
 color:"#94a3b8"
+
+}
+
+const pagination={
+
+display:"flex",
+
+justifyContent:"center",
+
+marginTop:"20px",
+
+gap:"15px"
+
+}
+
+const pageBtn={
+
+padding:"8px 15px",
+
+background:"#6366f1",
+
+border:"none",
+
+color:"white",
+
+borderRadius:"6px",
+
+cursor:"pointer"
+
+}
+
+const pageText={
+
+alignSelf:"center"
 
 }
 
