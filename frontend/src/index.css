@@ -1,3 +1,18 @@
+body{
+
+margin:0;
+
+font-family:Arial, Helvetica, sans-serif;
+
+background:#0D1117;
+
+color:white;
+
+}
+
+
+/* Calendar Styling */
+
 .react-calendar{
 
 width:100%;
@@ -40,6 +55,8 @@ background:#22c55e !important;
 
 color:white !important;
 
+border-radius:6px;
+
 }
 
 .absent{
@@ -48,6 +65,8 @@ background:#ef4444 !important;
 
 color:white !important;
 
+border-radius:6px;
+
 }
 
 .leave{
@@ -55,5 +74,103 @@ color:white !important;
 background:#f59e0b !important;
 
 color:white !important;
+
+border-radius:6px;
+
+}
+
+
+/* Scrollbar Styling */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#020617;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#1e293b;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#334155;
+
+}
+
+
+/* Animation Background */
+
+@keyframes bgMove{
+
+0%{
+
+background-position:0% 50%
+
+}
+
+50%{
+
+background-position:100% 50%
+
+}
+
+100%{
+
+background-position:0% 50%
+
+}
+
+}
+
+
+/* Floating Logo Animation */
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0px)
+
+}
+
+50%{
+
+transform:translateY(-8px)
+
+}
+
+100%{
+
+transform:translateY(0px)
+
+}
+
+}
+
+
+/* Glass card helper (optional future use) */
+
+.glass{
+
+background:rgba(15,23,42,0.7);
+
+backdrop-filter:blur(10px);
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,0.05);
+
+box-shadow:0px 0px 25px black;
 
 }
