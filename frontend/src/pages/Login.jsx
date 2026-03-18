@@ -1,26 +1,32 @@
 import {useState} from "react"
 import axios from "axios"
+import {useNavigate} from "react-router-dom"
 
 export default function Login(){
 
 const[email,setEmail]=useState("")
 const[password,setPassword]=useState("")
 
+const navigate=useNavigate()
+
 const login=async()=>{
 
 try{
 
-let r=await axios.post(
+let res=await axios.post(
+
 "http://127.0.0.1:8000/login",
+
 {
+
 email,
 password
-}
-)
 
-localStorage.setItem("token",r.data.token)
+})
 
-window.location="/dashboard"
+localStorage.setItem("token",res.data.access_token)
+
+navigate("/dashboard")
 
 }catch{
 
@@ -32,45 +38,31 @@ alert("Login Failed")
 
 return(
 
-<div style={{
+<div style={container}>
 
-height:"100vh",
+<div style={card}>
 
-display:"flex",
+<img
 
-justifyContent:"center",
+src="/logo.png"
 
-alignItems:"center",
+alt="logo"
 
-background:"linear-gradient(135deg,#0D1117,#1f2937)"
+style={logo}
 
-}}>
+/>
 
-<div style={{
+<h1 style={title}>
 
-background:"#161B22",
+PROEDUVATE
 
-padding:"40px",
+</h1>
 
-borderRadius:"10px",
-
-width:"350px",
-
-boxShadow:"0px 0px 20px black"
-
-}}>
-
-<h2 style={{
-
-textAlign:"center",
-
-marginBottom:"20px"
-
-}}>
+<p style={subtitle}>
 
 Smart Intern Attendance System
 
-</h2>
+</p>
 
 <input
 
@@ -78,21 +70,7 @@ placeholder="Email"
 
 onChange={(e)=>setEmail(e.target.value)}
 
-style={{
-
-width:"100%",
-
-padding:"10px",
-
-marginBottom:"15px",
-
-background:"#0D1117",
-
-color:"white",
-
-border:"none"
-
-}}
+style={input}
 
 />
 
@@ -104,21 +82,7 @@ placeholder="Password"
 
 onChange={(e)=>setPassword(e.target.value)}
 
-style={{
-
-width:"100%",
-
-padding:"10px",
-
-marginBottom:"20px",
-
-background:"#0D1117",
-
-color:"white",
-
-border:"none"
-
-}}
+style={input}
 
 />
 
@@ -126,21 +90,9 @@ border:"none"
 
 onClick={login}
 
-style={{
+style={button}
 
-width:"100%",
-
-padding:"12px",
-
-background:"linear-gradient(90deg,#4f46e5,#9333ea)",
-
-border:"none",
-
-color:"white",
-
-cursor:"pointer"
-
-}}>
+>
 
 Login
 
@@ -152,4 +104,96 @@ Login
 
 )
 
+}
+
+
+const container={
+
+height:"100vh",
+
+display:"flex",
+
+justifyContent:"center",
+
+alignItems:"center",
+
+background:"linear-gradient(135deg,#020617,#0f172a)"
+
+}
+
+const card={
+
+background:"rgba(2,6,23,0.9)",
+
+padding:"45px",
+
+borderRadius:"15px",
+
+width:"360px",
+
+boxShadow:"0px 0px 30px black",
+
+textAlign:"center",
+
+backdropFilter:"blur(12px)"
+
+}
+
+const logo={
+
+width:"80px",
+
+marginBottom:"15px"
+
+}
+
+const title={
+
+color:"#FFD700",
+
+marginBottom:"5px"
+
+}
+
+const subtitle={
+
+color:"#94a3b8",
+
+marginBottom:"25px"
+
+}
+
+const input={
+
+width:"100%",
+
+padding:"12px",
+
+marginBottom:"15px",
+
+background:"#020617",
+
+border:"1px solid #1e293b",
+
+color:"white",
+
+borderRadius:"6px"
+
+}
+
+const button={
+
+width:"100%",
+
+padding:"12px",
+
+background:"linear-gradient(90deg,#4f46e5,#9333ea)",
+
+border:"none",
+
+color:"white",
+
+cursor:"pointer",
+
+borderRadius:"6px"
 }
