@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react"
 import axios from "axios"
+
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
 
@@ -41,64 +42,57 @@ return(
 <Navbar/>
 
 <h1 style={title}>
-Audit Logs
+Audit Timeline
 </h1>
 
-<div style={card}>
 
-<table style={table}>
-
-<thead>
-
-<tr>
-
-<th>User</th>
-
-<th>Action</th>
-
-<th>Date</th>
-
-</tr>
-
-</thead>
-
-<tbody>
+<div style={timelineCard}>
 
 {
 
 data.length===0?
 
-<tr>
+<div style={empty}>
 
-<td colSpan="3">
+No Activity Yet
 
-No Logs Found
-
-</td>
-
-</tr>
+</div>
 
 :
 
-data.map((a,i)=>(
+data.map((log,index)=>(
 
-<tr key={i}>
+<div key={index} style={item}>
 
-<td>{a.user}</td>
+<div style={dot}/>
 
-<td>{a.action}</td>
+<div style={content}>
 
-<td>{a.date}</td>
+<h3>
 
-</tr>
+{log.action}
+
+</h3>
+
+<p>
+
+User : {log.user}
+
+</p>
+
+<p style={date}>
+
+{log.date}
+
+</p>
+
+</div>
+
+</div>
 
 ))
 
 }
-
-</tbody>
-
-</table>
 
 </div>
 
@@ -128,22 +122,80 @@ padding:"30px"
 }
 
 const title={
-color:"#FFD700"
+
+color:"#FFD700",
+
+marginBottom:"30px"
+
 }
 
-const card={
+const timelineCard={
+
+background:"rgba(15,23,42,0.8)",
+
+padding:"30px",
+
+borderRadius:"15px",
+
+backdropFilter:"blur(10px)",
+
+boxShadow:"0px 0px 25px black"
+
+}
+
+const item={
+
+display:"flex",
+
+gap:"20px",
+
+marginBottom:"25px",
+
+borderLeft:"2px solid #1e293b",
+
+paddingLeft:"20px"
+
+}
+
+const dot={
+
+width:"15px",
+
+height:"15px",
+
+background:"#6366f1",
+
+borderRadius:"50%",
+
+marginTop:"8px"
+
+}
+
+const content={
 
 background:"#020617",
 
-padding:"25px",
+padding:"15px",
 
-borderRadius:"10px"
+borderRadius:"8px",
+
+width:"400px"
 
 }
 
-const table={
+const date={
 
-width:"100%",
+color:"#94a3b8",
 
-borderCollapse:"collapse"
+fontSize:"13px"
+
+}
+
+const empty={
+
+textAlign:"center",
+
+padding:"30px",
+
+color:"#94a3b8"
 }
