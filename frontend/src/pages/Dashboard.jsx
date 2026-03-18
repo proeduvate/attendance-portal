@@ -18,12 +18,8 @@ month:{}
 useEffect(()=>{
 
 axios.get(
-
 "http://127.0.0.1:8000/dashboard_stats"
-
-)
-
-.then(res=>{
+).then(res=>{
 
 setStats(res.data)
 
@@ -42,142 +38,56 @@ return(
 
 <Navbar/>
 
-<h1>
-
+<h1 style={title}>
 Dashboard Overview
-
 </h1>
 
 
-<h2 style={section}>
-
-Today
-
-</h2>
+<h2 style={section}>Today</h2>
 
 <div style={grid}>
 
-<div style={green}>
+<div style={glassGreen}>
 
-Present
+<h3>Present</h3>
 
-<h2>
-
-{stats.today.present}
-
-</h2>
+<h1>{stats.today.present}</h1>
 
 </div>
 
-<div style={red}>
+<div style={glassRed}>
 
-Absent
+<h3>Absent</h3>
 
-<h2>
-
-{stats.today.absent}
-
-</h2>
+<h1>{stats.today.absent}</h1>
 
 </div>
 
-<div style={yellow}>
+<div style={glassYellow}>
 
-Leave
+<h3>Leave</h3>
 
-<h2>
-
-{stats.today.leave}
-
-</h2>
+<h1>{stats.today.leave}</h1>
 
 </div>
 
 </div>
 
 
-<h2 style={section}>
-
-Yesterday
-
-</h2>
+<h2 style={section}>Last 7 Days</h2>
 
 <div style={grid}>
 
-<div style={green}>
-
-{stats.yesterday.present}
-
-</div>
-
-<div style={red}>
-
-{stats.yesterday.absent}
-
-</div>
-
-<div style={yellow}>
-
-{stats.yesterday.leave}
-
-</div>
-
-</div>
-
-
-<h2 style={section}>
-
-Last 7 Days
-
-</h2>
-
-<div style={grid}>
-
-<div style={green}>
-
+<div style={glassGreen}>
 {stats.week.present}
-
 </div>
 
-<div style={red}>
-
+<div style={glassRed}>
 {stats.week.absent}
-
 </div>
 
-<div style={yellow}>
-
+<div style={glassYellow}>
 {stats.week.leave}
-
-</div>
-
-</div>
-
-
-<h2 style={section}>
-
-Last 30 Days
-
-</h2>
-
-<div style={grid}>
-
-<div style={green}>
-
-{stats.month.present}
-
-</div>
-
-<div style={red}>
-
-{stats.month.absent}
-
-</div>
-
-<div style={yellow}>
-
-{stats.month.leave}
-
 </div>
 
 </div>
@@ -207,10 +117,12 @@ padding:"30px"
 
 }
 
+const title={
+color:"#FFD700"
+}
+
 const section={
-
 marginTop:"30px"
-
 }
 
 const grid={
@@ -219,38 +131,48 @@ display:"grid",
 
 gridTemplateColumns:"repeat(3,1fr)",
 
-gap:"20px",
+gap:"25px",
 
-marginBottom:"20px"
-
-}
-
-const green={
-
-background:"#15803d",
-
-padding:"25px",
-
-borderRadius:"10px"
+marginBottom:"25px"
 
 }
 
-const red={
+const glassBase={
 
-background:"#7f1d1d",
+padding:"30px",
 
-padding:"25px",
+borderRadius:"15px",
 
-borderRadius:"10px"
+background:"rgba(15,23,42,0.7)",
+
+backdropFilter:"blur(12px)",
+
+boxShadow:"0px 0px 25px rgba(0,0,0,0.6)",
+
+border:"1px solid rgba(255,255,255,0.05)"
 
 }
 
-const yellow={
+const glassGreen={
 
-background:"#78350f",
+...glassBase,
 
-padding:"25px",
+borderLeft:"5px solid #22c55e"
 
-borderRadius:"10px"
+}
+
+const glassRed={
+
+...glassBase,
+
+borderLeft:"5px solid #ef4444"
+
+}
+
+const glassYellow={
+
+...glassBase,
+
+borderLeft:"5px solid #f59e0b"
 
 }
