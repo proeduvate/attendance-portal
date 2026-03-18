@@ -1,6 +1,7 @@
 import {useState,useEffect} from "react"
 import axios from "axios"
 import Sidebar from "../components/Sidebar"
+import Navbar from "../components/Navbar"
 import Calendar from "react-calendar"
 
 import "react-calendar/dist/Calendar.css"
@@ -9,6 +10,7 @@ export default function InternCalendar(){
 
 const[intern,setIntern]=useState("")
 const[data,setData]=useState([])
+const[selected,setSelected]=useState(null)
 
 useEffect(()=>{
 
@@ -31,25 +33,40 @@ setData(res.data)
 },[intern])
 
 
-const getColor=(date)=>{
+const getStatus=(date)=>{
 
 let d=date.toISOString().slice(0,10)
 
 let record=data.find(x=>x.date===d)
 
+return record
+
+}
+
+
+const getColor=(date)=>{
+
+let record=getStatus(date)
+
 if(!record) return ""
 
 if(record.status==="PRESENT")
-
 return "present"
 
 if(record.status==="ABSENT")
-
 return "absent"
 
 if(record.status==="COMPANY_LEAVE")
-
 return "leave"
+
+}
+
+
+const onClickDay=(date)=>{
+
+let record=getStatus(date)
+
+setSelected(record)
 
 }
 
@@ -60,7 +77,9 @@ return(
 
 <Sidebar/>
 
-<div style={container}>
+<div style={main}>
+
+<Navbar/>
 
 <h1>
 
@@ -78,11 +97,60 @@ style={input}
 
 />
 
+<div style={calendarBox}>
+
 <Calendar
 
 tileClassName={({date})=>getColor(date)}
 
+onClickDay={onClickDay}
+
 />
+
+</div>
+
+
+{
+
+selected && (
+
+<div style={detailBox}>
+
+<h2>
+
+Day Details
+
+</h2>
+
+<p>
+
+Date :
+
+{selected.date}
+
+</p>
+
+<p>
+
+Status :
+
+{selected.status}
+
+</p>
+
+<p>
+
+Reason :
+
+{selected.reason || "No reason"}
+
+</p>
+
+</div>
+
+)
+
+}
 
 </div>
 
@@ -92,32 +160,65 @@ tileClassName={({date})=>getColor(date)}
 
 }
 
-const container={
+
+const main={
 
 marginLeft:"260px",
 
-padding:"40px",
+width:"100%",
 
 background:"#0D1117",
 
-height:"100vh",
+minHeight:"100vh",
 
 color:"white",
 
-width:"100%"
+padding:"30px"
 
 }
 
 const input={
 
-padding:"10px",
-
-marginBottom:"20px",
+padding:"12px",
 
 background:"#020617",
 
-border:"none",
+border:"1px solid #1e293b",
 
-color:"white"
+color:"white",
+
+borderRadius:"6px",
+
+width:"250px",
+
+marginBottom:"20px"
+
+}
+
+const calendarBox={
+
+background:"#020617",
+
+padding:"25px",
+
+borderRadius:"10px",
+
+width:"650px",
+
+boxShadow:"0px 0px 20px black"
+
+}
+
+const detailBox={
+
+marginTop:"25px",
+
+background:"#020617",
+
+padding:"25px",
+
+borderRadius:"10px",
+
+width:"400px"
 
 }
