@@ -1,9 +1,36 @@
+import {useEffect,useState} from "react"
+import axios from "axios"
+
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
-import Analytics from "../components/Analytics"
-import {motion} from "framer-motion"
 
 export default function Dashboard(){
+
+const[stats,setStats]=useState({
+
+today:{},
+yesterday:{},
+week:{},
+month:{}
+
+})
+
+useEffect(()=>{
+
+axios.get(
+
+"http://127.0.0.1:8000/dashboard_stats"
+
+)
+
+.then(res=>{
+
+setStats(res.data)
+
+})
+
+},[])
+
 
 return(
 
@@ -15,49 +42,145 @@ return(
 
 <Navbar/>
 
-<h1 style={{marginTop:"20px"}}>
+<h1>
 
 Dashboard Overview
 
 </h1>
 
+
+<h2 style={section}>
+
+Today
+
+</h2>
+
 <div style={grid}>
 
-<motion.div style={cardGreen} whileHover={{scale:1.05}}>
+<div style={green}>
 
-<h2>42</h2>
+Present
 
-<p>Present</p>
+<h2>
 
-</motion.div>
+{stats.today.present}
 
-<motion.div style={cardRed} whileHover={{scale:1.05}}>
-
-<h2>5</h2>
-
-<p>Absent</p>
-
-</motion.div>
-
-<motion.div style={cardYellow} whileHover={{scale:1.05}}>
-
-<h2>3</h2>
-
-<p>Leave</p>
-
-</motion.div>
-
-<motion.div style={cardPurple} whileHover={{scale:1.05}}>
-
-<h2>2</h2>
-
-<p>Risk</p>
-
-</motion.div>
+</h2>
 
 </div>
 
-<Analytics/>
+<div style={red}>
+
+Absent
+
+<h2>
+
+{stats.today.absent}
+
+</h2>
+
+</div>
+
+<div style={yellow}>
+
+Leave
+
+<h2>
+
+{stats.today.leave}
+
+</h2>
+
+</div>
+
+</div>
+
+
+<h2 style={section}>
+
+Yesterday
+
+</h2>
+
+<div style={grid}>
+
+<div style={green}>
+
+{stats.yesterday.present}
+
+</div>
+
+<div style={red}>
+
+{stats.yesterday.absent}
+
+</div>
+
+<div style={yellow}>
+
+{stats.yesterday.leave}
+
+</div>
+
+</div>
+
+
+<h2 style={section}>
+
+Last 7 Days
+
+</h2>
+
+<div style={grid}>
+
+<div style={green}>
+
+{stats.week.present}
+
+</div>
+
+<div style={red}>
+
+{stats.week.absent}
+
+</div>
+
+<div style={yellow}>
+
+{stats.week.leave}
+
+</div>
+
+</div>
+
+
+<h2 style={section}>
+
+Last 30 Days
+
+</h2>
+
+<div style={grid}>
+
+<div style={green}>
+
+{stats.month.present}
+
+</div>
+
+<div style={red}>
+
+{stats.month.absent}
+
+</div>
+
+<div style={yellow}>
+
+{stats.month.leave}
+
+</div>
+
+</div>
 
 </div>
 
@@ -67,9 +190,10 @@ Dashboard Overview
 
 }
 
+
 const main={
 
-marginLeft:"250px",
+marginLeft:"260px",
 
 width:"100%",
 
@@ -79,7 +203,13 @@ minHeight:"100vh",
 
 color:"white",
 
-padding:"20px"
+padding:"30px"
+
+}
+
+const section={
+
+marginTop:"30px"
 
 }
 
@@ -87,15 +217,17 @@ const grid={
 
 display:"grid",
 
-gridTemplateColumns:"repeat(4,1fr)",
+gridTemplateColumns:"repeat(3,1fr)",
 
-gap:"20px"
+gap:"20px",
+
+marginBottom:"20px"
 
 }
 
-const cardGreen={
+const green={
 
-background:"linear-gradient(135deg,#22c55e,#15803d)",
+background:"#15803d",
 
 padding:"25px",
 
@@ -103,19 +235,9 @@ borderRadius:"10px"
 
 }
 
-const cardRed={
+const red={
 
-background:"linear-gradient(135deg,#ef4444,#7f1d1d)",
-
-padding:"25px",
-
-borderRadius:"10px"
-
-}
-
-const cardYellow={
-
-background:"linear-gradient(135deg,#f59e0b,#78350f)",
+background:"#7f1d1d",
 
 padding:"25px",
 
@@ -123,9 +245,9 @@ borderRadius:"10px"
 
 }
 
-const cardPurple={
+const yellow={
 
-background:"linear-gradient(135deg,#6366f1,#312e81)",
+background:"#78350f",
 
 padding:"25px",
 
