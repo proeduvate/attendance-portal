@@ -37,36 +37,24 @@ const getStatus=(date)=>{
 
 let d=date.toISOString().slice(0,10)
 
-let record=data.find(x=>x.date===d)
-
-return record
+return data.find(x=>x.date===d)
 
 }
 
 
 const getColor=(date)=>{
 
-let record=getStatus(date)
+let r=getStatus(date)
 
-if(!record) return ""
+if(!r) return ""
 
-if(record.status==="PRESENT")
+if(r.status==="PRESENT")
 return "present"
 
-if(record.status==="ABSENT")
+if(r.status==="ABSENT")
 return "absent"
 
-if(record.status==="COMPANY_LEAVE")
 return "leave"
-
-}
-
-
-const onClickDay=(date)=>{
-
-let record=getStatus(date)
-
-setSelected(record)
 
 }
 
@@ -81,10 +69,8 @@ return(
 
 <Navbar/>
 
-<h1>
-
+<h1 style={title}>
 Attendance Calendar
-
 </h1>
 
 <input
@@ -97,13 +83,20 @@ style={input}
 
 />
 
-<div style={calendarBox}>
+
+<div style={calendarWrap}>
 
 <Calendar
 
 tileClassName={({date})=>getColor(date)}
 
-onClickDay={onClickDay}
+onClickDay={(date)=>{
+
+let r=getStatus(date)
+
+if(r) setSelected(r)
+
+}}
 
 />
 
@@ -114,37 +107,47 @@ onClickDay={onClickDay}
 
 selected && (
 
-<div style={detailBox}>
+<div style={modal}>
+
+<div style={modalCard}>
 
 <h2>
 
-Day Details
+Attendance Detail
 
 </h2>
 
 <p>
 
-Date :
-
-{selected.date}
+Date : {selected.date}
 
 </p>
 
 <p>
 
-Status :
-
-{selected.status}
+Status : {selected.status}
 
 </p>
 
 <p>
 
-Reason :
-
-{selected.reason || "No reason"}
+Reason : {selected.reason || "Not provided"}
 
 </p>
+
+<button
+
+onClick={()=>setSelected(null)}
+
+style={close}
+
+>
+
+Close
+
+</button>
+
+</div>
 
 </div>
 
@@ -177,6 +180,10 @@ padding:"30px"
 
 }
 
+const title={
+color:"#FFD700"
+}
+
 const input={
 
 padding:"12px",
@@ -191,34 +198,72 @@ borderRadius:"6px",
 
 width:"250px",
 
-marginBottom:"20px"
+marginBottom:"25px"
 
 }
 
-const calendarBox={
+const calendarWrap={
 
 background:"#020617",
 
-padding:"25px",
+padding:"30px",
 
-borderRadius:"10px",
+borderRadius:"12px",
 
-width:"650px",
+width:"900px",
 
-boxShadow:"0px 0px 20px black"
+boxShadow:"0px 0px 25px black"
 
 }
 
-const detailBox={
+const modal={
 
-marginTop:"25px",
+position:"fixed",
+
+top:0,
+
+left:0,
+
+width:"100%",
+
+height:"100%",
+
+background:"rgba(0,0,0,0.6)",
+
+display:"flex",
+
+justifyContent:"center",
+
+alignItems:"center"
+
+}
+
+const modalCard={
 
 background:"#020617",
 
-padding:"25px",
+padding:"30px",
 
 borderRadius:"10px",
 
-width:"400px"
+width:"300px"
+
+}
+
+const close={
+
+marginTop:"20px",
+
+padding:"10px",
+
+background:"#ef4444",
+
+border:"none",
+
+color:"white",
+
+cursor:"pointer",
+
+borderRadius:"6px"
 
 }
