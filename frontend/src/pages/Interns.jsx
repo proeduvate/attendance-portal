@@ -16,6 +16,7 @@ const[name,setName]=useState("")
 const[dept,setDept]=useState("")
 const[id,setId]=useState("")
 
+
 useEffect(()=>{
 
 fetchInterns()
@@ -54,33 +55,62 @@ setFiltered(data)
 
 const fetchInterns=async()=>{
 
+try{
+
 let res=await axios.get(
+
 "http://127.0.0.1:8000/interns"
+
 )
 
 setInterns(res.data)
 
 setFiltered(res.data)
 
+}catch{
+
+setInterns([])
+
+setFiltered([])
+
+}
+
 }
 
 
 const addIntern=async()=>{
 
+try{
+
 await axios.post(
+
 "http://127.0.0.1:8000/add_intern",
+
 {
 
 intern_id:id,
+
 name:name,
+
 department:dept,
+
 email:"hr@test.com",
+
 phone:"999999",
+
 mentor:"HR"
 
-})
+}
+
+)
 
 fetchInterns()
+
+}catch{
+
+alert("Failed to add intern")
+
+}
 
 }
 
@@ -95,38 +125,57 @@ return(
 
 <Navbar/>
 
-<h1 style={heading}>
-
+<h1 style={title}>
 Intern Management
-
 </h1>
 
 
-<div style={filterBox}>
+<div style={topBar}>
 
 <input
+
 placeholder="Search Intern"
+
 onChange={(e)=>setSearch(e.target.value)}
+
 style={input}
+
 />
 
 <select
+
 onChange={(e)=>setDeptFilter(e.target.value)}
+
 style={input}
+
 >
 
-<option value="">All Departments</option>
-<option value="AI">AI</option>
-<option value="Cloud">Cloud</option>
-<option value="Web">Web</option>
-<option value="Product">Product</option>
+<option value="">
+All Departments
+</option>
+
+<option value="AI">
+AI
+</option>
+
+<option value="Cloud">
+Cloud
+</option>
+
+<option value="Web">
+Web
+</option>
+
+<option value="Product">
+Product
+</option>
 
 </select>
 
 </div>
 
 
-<div style={form}>
+<div style={formBox}>
 
 <input
 placeholder="Intern ID"
@@ -180,17 +229,34 @@ Add Intern
 
 {
 
+filtered.length===0?
+
+<tr>
+
+<td colSpan="3" style={empty}>
+No interns found
+</td>
+
+</tr>
+
+:
+
 filtered.map((i,index)=>(
 
 <tr key={index} style={row}>
 
-<td style={cell}>{i.intern_id}</td>
+<td style={cell}>
+{i.intern_id}
+</td>
 
 <td style={cell}>
 
 <Link
+
 to={"/profile/"+i.intern_id}
+
 style={nameLink}
+
 >
 
 {i.name}
@@ -199,7 +265,9 @@ style={nameLink}
 
 </td>
 
-<td style={cell}>{i.department}</td>
+<td style={cell}>
+{i.department}
+</td>
 
 </tr>
 
@@ -238,13 +306,15 @@ padding:"30px"
 
 }
 
-const heading={
+const title={
+
+color:"#FFD700",
 
 marginBottom:"20px"
 
 }
 
-const filterBox={
+const topBar={
 
 display:"flex",
 
@@ -254,7 +324,7 @@ marginBottom:"25px"
 
 }
 
-const form={
+const formBox={
 
 display:"flex",
 
@@ -292,9 +362,7 @@ color:"white",
 
 cursor:"pointer",
 
-borderRadius:"6px",
-
-width:"140px"
+borderRadius:"6px"
 
 }
 
@@ -306,7 +374,7 @@ borderRadius:"10px",
 
 padding:"20px",
 
-boxShadow:"0px 0px 15px black"
+boxShadow:"0px 0px 20px black"
 
 }
 
@@ -335,6 +403,16 @@ borderBottom:"1px solid #1e293b"
 const cell={
 
 padding:"15px"
+
+}
+
+const empty={
+
+padding:"20px",
+
+textAlign:"center",
+
+color:"#94a3b8"
 
 }
 
