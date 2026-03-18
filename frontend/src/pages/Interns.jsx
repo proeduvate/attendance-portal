@@ -7,19 +7,14 @@ import {Link} from "react-router-dom"
 export default function Interns(){
 
 const[interns,setInterns]=useState([])
-
 const[filtered,setFiltered]=useState([])
 
 const[search,setSearch]=useState("")
-
 const[deptFilter,setDeptFilter]=useState("")
 
 const[name,setName]=useState("")
-
 const[dept,setDept]=useState("")
-
 const[id,setId]=useState("")
-
 
 useEffect(()=>{
 
@@ -60,9 +55,7 @@ setFiltered(data)
 const fetchInterns=async()=>{
 
 let res=await axios.get(
-
 "http://127.0.0.1:8000/interns"
-
 )
 
 setInterns(res.data)
@@ -75,26 +68,17 @@ setFiltered(res.data)
 const addIntern=async()=>{
 
 await axios.post(
-
 "http://127.0.0.1:8000/add_intern",
-
 {
 
 intern_id:id,
-
 name:name,
-
 department:dept,
-
 email:"hr@test.com",
-
 phone:"999999",
-
 mentor:"HR"
 
-}
-
-)
+})
 
 fetchInterns()
 
@@ -111,64 +95,38 @@ return(
 
 <Navbar/>
 
-<h1>
+<h1 style={heading}>
 
 Intern Management
 
 </h1>
 
 
-<div style={topBar}>
+<div style={filterBox}>
 
 <input
-
 placeholder="Search Intern"
-
 onChange={(e)=>setSearch(e.target.value)}
-
 style={input}
-
 />
 
-
 <select
-
 onChange={(e)=>setDeptFilter(e.target.value)}
-
 style={input}
-
 >
 
-<option value="">
-
-All Departments
-
-</option>
-
-<option value="AI">
-
-AI
-
-</option>
-
-<option value="Cloud">
-
-Cloud
-
-</option>
-
-<option value="Web">
-
-Web
-
-</option>
+<option value="">All Departments</option>
+<option value="AI">AI</option>
+<option value="Cloud">Cloud</option>
+<option value="Web">Web</option>
+<option value="Product">Product</option>
 
 </select>
 
 </div>
 
 
-<div style={formBox}>
+<div style={form}>
 
 <input
 placeholder="Intern ID"
@@ -200,11 +158,13 @@ Add Intern
 </div>
 
 
+<div style={tableCard}>
+
 <table style={table}>
 
 <thead>
 
-<tr>
+<tr style={thead}>
 
 <th>ID</th>
 
@@ -224,22 +184,13 @@ filtered.map((i,index)=>(
 
 <tr key={index} style={row}>
 
-<td>{i.intern_id}</td>
+<td style={cell}>{i.intern_id}</td>
 
-<td>
+<td style={cell}>
 
 <Link
-
 to={"/profile/"+i.intern_id}
-
-style={{
-
-color:"#8b5cf6",
-
-textDecoration:"none"
-
-}}
-
+style={nameLink}
 >
 
 {i.name}
@@ -248,7 +199,7 @@ textDecoration:"none"
 
 </td>
 
-<td>{i.department}</td>
+<td style={cell}>{i.department}</td>
 
 </tr>
 
@@ -264,6 +215,8 @@ textDecoration:"none"
 
 </div>
 
+</div>
+
 )
 
 }
@@ -271,7 +224,7 @@ textDecoration:"none"
 
 const main={
 
-marginLeft:"250px",
+marginLeft:"260px",
 
 width:"100%",
 
@@ -285,25 +238,35 @@ padding:"30px"
 
 }
 
-const topBar={
-
-display:"flex",
-
-gap:"20px",
+const heading={
 
 marginBottom:"20px"
 
 }
 
-const formBox={
+const filterBox={
 
-marginBottom:"30px"
+display:"flex",
+
+gap:"20px",
+
+marginBottom:"25px"
+
+}
+
+const form={
+
+display:"flex",
+
+gap:"15px",
+
+marginBottom:"25px"
 
 }
 
 const input={
 
-padding:"10px",
+padding:"12px",
 
 background:"#020617",
 
@@ -311,15 +274,17 @@ border:"1px solid #1e293b",
 
 color:"white",
 
-marginRight:"10px"
+borderRadius:"6px",
+
+width:"200px"
 
 }
 
 const button={
 
-padding:"10px",
+padding:"12px",
 
-background:"#6366f1",
+background:"linear-gradient(90deg,#4f46e5,#9333ea)",
 
 border:"none",
 
@@ -327,13 +292,13 @@ color:"white",
 
 cursor:"pointer",
 
-borderRadius:"6px"
+borderRadius:"6px",
+
+width:"140px"
 
 }
 
-const table={
-
-width:"100%",
+const tableCard={
 
 background:"#020617",
 
@@ -341,11 +306,43 @@ borderRadius:"10px",
 
 padding:"20px",
 
+boxShadow:"0px 0px 15px black"
+
+}
+
+const table={
+
+width:"100%",
+
 borderCollapse:"collapse"
+
+}
+
+const thead={
+
+background:"#0f172a",
+
+textAlign:"left"
 
 }
 
 const row={
 
 borderBottom:"1px solid #1e293b"
+
+}
+
+const cell={
+
+padding:"15px"
+
+}
+
+const nameLink={
+
+color:"#8b5cf6",
+
+textDecoration:"none",
+
+fontWeight:"500"
 }
