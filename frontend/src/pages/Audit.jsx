@@ -1,7 +1,7 @@
 import {useEffect,useState} from "react"
 import axios from "axios"
 import Sidebar from "../components/Sidebar"
-import {motion} from "framer-motion"
+import Navbar from "../components/Navbar"
 
 export default function Audit(){
 
@@ -10,7 +10,9 @@ const[data,setData]=useState([])
 useEffect(()=>{
 
 axios.get(
+
 "http://127.0.0.1:8000/audit"
+
 )
 
 .then(res=>{
@@ -19,7 +21,14 @@ setData(res.data)
 
 })
 
+.catch(()=>{
+
+setData([])
+
+})
+
 },[])
+
 
 return(
 
@@ -27,59 +36,69 @@ return(
 
 <Sidebar/>
 
-<div style={container}>
+<div style={main}>
 
-<h1>
+<Navbar/>
 
+<h1 style={title}>
 Audit Logs
-
 </h1>
 
-<div style={grid}>
+<div style={card}>
+
+<table style={table}>
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>Action</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody>
 
 {
 
-data.map((a,index)=>(
+data.length===0?
 
-<motion.div
+<tr>
 
-key={index}
+<td colSpan="3">
 
-initial={{opacity:0,y:40}}
+No Logs Found
 
-animate={{opacity:1,y:0}}
+</td>
 
-transition={{duration:0.4}}
+</tr>
 
-whileHover={{scale:1.05}}
+:
 
-style={card}
+data.map((a,i)=>(
 
->
+<tr key={i}>
 
-<h3>
+<td>{a.user}</td>
 
-{a.action}
+<td>{a.action}</td>
 
-</h3>
+<td>{a.date}</td>
 
-<p>
-
-User : {a.user}
-
-</p>
-
-<p>
-
-Date : {a.date}
-
-</p>
-
-</motion.div>
+</tr>
 
 ))
 
 }
+
+</tbody>
+
+</table>
 
 </div>
 
@@ -91,42 +110,40 @@ Date : {a.date}
 
 }
 
-const container={
+
+const main={
 
 marginLeft:"260px",
 
-padding:"40px",
+width:"100%",
 
 background:"#0D1117",
 
-height:"100vh",
+minHeight:"100vh",
 
 color:"white",
 
-width:"100%"
+padding:"30px"
 
 }
 
-const grid={
-
-display:"grid",
-
-gridTemplateColumns:"repeat(3,1fr)",
-
-gap:"20px",
-
-marginTop:"30px"
-
+const title={
+color:"#FFD700"
 }
 
 const card={
 
-background:"linear-gradient(135deg,#6366f1,#1e3a8a)",
+background:"#020617",
 
-padding:"20px",
+padding:"25px",
 
-borderRadius:"10px",
+borderRadius:"10px"
 
-boxShadow:"0px 0px 15px black"
+}
 
+const table={
+
+width:"100%",
+
+borderCollapse:"collapse"
 }
