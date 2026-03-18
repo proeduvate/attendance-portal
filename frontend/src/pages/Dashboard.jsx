@@ -4,24 +4,33 @@ import axios from "axios"
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
 
+import {
+
+LineChart,
+Line,
+XAxis,
+YAxis,
+Tooltip,
+CartesianGrid,
+Legend
+
+} from "recharts"
+
 export default function Dashboard(){
 
-const[stats,setStats]=useState({
-
-today:{},
-yesterday:{},
-week:{},
-month:{}
-
-})
+const[trend,setTrend]=useState([])
 
 useEffect(()=>{
 
 axios.get(
-"http://127.0.0.1:8000/dashboard_stats"
-).then(res=>{
 
-setStats(res.data)
+"http://127.0.0.1:8000/attendance_trend"
+
+)
+
+.then(res=>{
+
+setTrend(res.data)
 
 })
 
@@ -39,56 +48,61 @@ return(
 <Navbar/>
 
 <h1 style={title}>
-Dashboard Overview
+Attendance Analytics
 </h1>
 
 
-<h2 style={section}>Today</h2>
+<div style={chartCard}>
 
-<div style={grid}>
+<h2>
+Attendance Trend
+</h2>
 
-<div style={glassGreen}>
+<LineChart
 
-<h3>Present</h3>
+width={900}
 
-<h1>{stats.today.present}</h1>
+height={400}
 
-</div>
+data={trend}
 
-<div style={glassRed}>
+>
 
-<h3>Absent</h3>
+<CartesianGrid stroke="#1e293b"/>
 
-<h1>{stats.today.absent}</h1>
+<XAxis dataKey="date"/>
 
-</div>
+<YAxis/>
 
-<div style={glassYellow}>
+<Tooltip/>
 
-<h3>Leave</h3>
+<Legend/>
 
-<h1>{stats.today.leave}</h1>
+<Line
 
-</div>
+type="monotone"
 
-</div>
+dataKey="present"
 
+stroke="#22c55e"
 
-<h2 style={section}>Last 7 Days</h2>
+strokeWidth={3}
 
-<div style={grid}>
+/>
 
-<div style={glassGreen}>
-{stats.week.present}
-</div>
+<Line
 
-<div style={glassRed}>
-{stats.week.absent}
-</div>
+type="monotone"
 
-<div style={glassYellow}>
-{stats.week.leave}
-</div>
+dataKey="absent"
+
+stroke="#ef4444"
+
+strokeWidth={3}
+
+/>
+
+</LineChart>
 
 </div>
 
@@ -121,58 +135,16 @@ const title={
 color:"#FFD700"
 }
 
-const section={
-marginTop:"30px"
-}
+const chartCard={
 
-const grid={
-
-display:"grid",
-
-gridTemplateColumns:"repeat(3,1fr)",
-
-gap:"25px",
-
-marginBottom:"25px"
-
-}
-
-const glassBase={
+background:"rgba(15,23,42,0.8)",
 
 padding:"30px",
 
 borderRadius:"15px",
 
-background:"rgba(15,23,42,0.7)",
+backdropFilter:"blur(10px)",
 
-backdropFilter:"blur(12px)",
-
-boxShadow:"0px 0px 25px rgba(0,0,0,0.6)",
-
-border:"1px solid rgba(255,255,255,0.05)"
-
-}
-
-const glassGreen={
-
-...glassBase,
-
-borderLeft:"5px solid #22c55e"
-
-}
-
-const glassRed={
-
-...glassBase,
-
-borderLeft:"5px solid #ef4444"
-
-}
-
-const glassYellow={
-
-...glassBase,
-
-borderLeft:"5px solid #f59e0b"
+boxShadow:"0px 0px 30px black"
 
 }
