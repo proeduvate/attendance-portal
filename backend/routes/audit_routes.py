@@ -1,36 +1,53 @@
 from fastapi import APIRouter
-from database import audit_collection
+from database import attendance_collection,intern_collection
 
-router = APIRouter()
+router=APIRouter()
 
 
-@router.get("/audit")
+@router.get("/patterns")
 
-def get_audit():
+def patterns():
 
-    data=list(
+    interns=list(
 
-        audit_collection.find(
-
-            {},
-
-            {"_id":0}
-
-        )
+        intern_collection.find({},{"_id":0})
 
     )
 
-    return data
+    result=[]
+
+    for i in interns:
+
+        data=list(
+
+            attendance_collection.find(
+
+                {"intern_id":i["intern_id"]}
+
+            )
+
+        )
+
+        absent=0
+
+        for d in data:
+
+            if d["status"]=="ABSENT":
+
+                absent+=1
 
 
-@router.post("/audit")
+        if absent>=3:
 
-def add_audit(data:dict):
+            result.append({
 
-    audit_collection.insert_one(data)
+                "name":i["name"],
 
-    return{
+                "intern_id":i["intern_id"],
 
-        "message":"Audit logged"
+                "absent_count":absent
 
-    }
+            })
+
+
+    return result
