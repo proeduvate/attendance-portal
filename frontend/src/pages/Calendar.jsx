@@ -17,9 +17,7 @@ useEffect(()=>{
 if(intern){
 
 axios.get(
-
 "http://127.0.0.1:8000/attendance/"+intern
-
 )
 
 .then(res=>{
@@ -73,6 +71,9 @@ return(
 Attendance Calendar
 </h1>
 
+
+<div style={topBar}>
+
 <input
 
 placeholder="Enter Intern ID"
@@ -84,7 +85,23 @@ style={input}
 />
 
 
-<div style={calendarWrap}>
+<div style={legend}>
+
+<div style={presentBox}/>
+Present
+
+<div style={absentBox}/>
+Absent
+
+<div style={leaveBox}/>
+Leave
+
+</div>
+
+</div>
+
+
+<div style={calendarCard}>
 
 <Calendar
 
@@ -112,27 +129,19 @@ selected && (
 <div style={modalCard}>
 
 <h2>
-
 Attendance Detail
-
 </h2>
 
 <p>
-
 Date : {selected.date}
-
 </p>
 
 <p>
-
 Status : {selected.status}
-
 </p>
 
 <p>
-
 Reason : {selected.reason || "Not provided"}
-
 </p>
 
 <button
@@ -184,6 +193,18 @@ const title={
 color:"#FFD700"
 }
 
+const topBar={
+
+display:"flex",
+
+justifyContent:"space-between",
+
+alignItems:"center",
+
+marginBottom:"25px"
+
+}
+
 const input={
 
 padding:"12px",
@@ -196,23 +217,67 @@ color:"white",
 
 borderRadius:"6px",
 
-width:"250px",
-
-marginBottom:"25px"
+width:"250px"
 
 }
 
-const calendarWrap={
+const legend={
 
-background:"#020617",
+display:"flex",
 
-padding:"30px",
+gap:"15px",
 
-borderRadius:"12px",
+alignItems:"center"
 
-width:"900px",
+}
 
-boxShadow:"0px 0px 25px black"
+const presentBox={
+
+width:"20px",
+
+height:"20px",
+
+background:"#22c55e",
+
+borderRadius:"4px"
+
+}
+
+const absentBox={
+
+width:"20px",
+
+height:"20px",
+
+background:"#ef4444",
+
+borderRadius:"4px"
+
+}
+
+const leaveBox={
+
+width:"20px",
+
+height:"20px",
+
+background:"#f59e0b",
+
+borderRadius:"4px"
+
+}
+
+const calendarCard={
+
+background:"rgba(15,23,42,0.8)",
+
+padding:"40px",
+
+borderRadius:"15px",
+
+backdropFilter:"blur(10px)",
+
+boxShadow:"0px 0px 30px black"
 
 }
 
@@ -228,7 +293,7 @@ width:"100%",
 
 height:"100%",
 
-background:"rgba(0,0,0,0.6)",
+background:"rgba(0,0,0,0.7)",
 
 display:"flex",
 
@@ -244,9 +309,9 @@ background:"#020617",
 
 padding:"30px",
 
-borderRadius:"10px",
+borderRadius:"12px",
 
-width:"300px"
+width:"320px"
 
 }
 
