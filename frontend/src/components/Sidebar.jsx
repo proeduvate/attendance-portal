@@ -8,16 +8,14 @@ return(
 <div style={sidebar}>
 
 <h2 style={title}>
-
-Attendance Portal
-
+PROEDUVATE
 </h2>
 
 <Link to="/dashboard" style={link}>
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
 Dashboard
@@ -30,7 +28,7 @@ Dashboard
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
 Interns
@@ -43,10 +41,10 @@ Interns
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
-Upload Attendance
+Upload
 
 </motion.div>
 
@@ -56,7 +54,7 @@ Upload Attendance
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
 Calendar
@@ -69,7 +67,7 @@ Calendar
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
 Patterns
@@ -82,7 +80,7 @@ Patterns
 
 <motion.div
 style={menu}
-whileHover={{scale:1.05,background:"#1e293b"}}
+whileHover={{scale:1.05}}
 >
 
 Audit Logs
@@ -99,39 +97,51 @@ Audit Logs
 
 const sidebar={
 
-width:"250px",
+width:"260px",
 
 height:"100vh",
 
-background:"#020617",
+position:"fixed",
 
-color:"white",
+left:0,
 
-padding:"20px",
+top:0,
 
-position:"fixed"
+background:"rgba(2,6,23,0.85)",
+
+backdropFilter:"blur(10px)",
+
+borderRight:"1px solid #1e293b",
+
+padding:"25px",
+
+zIndex:1000
 
 }
 
 const title={
 
+color:"#FFD700",
+
 marginBottom:"40px",
 
-color:"#8b5cf6"
+fontWeight:"bold"
 
 }
 
 const menu={
 
-padding:"12px",
+padding:"14px",
 
 marginBottom:"15px",
 
-background:"#0f172a",
+background:"rgba(15,23,42,0.7)",
 
-borderRadius:"6px",
+borderRadius:"8px",
 
-cursor:"pointer"
+cursor:"pointer",
+
+transition:"0.3s"
 
 }
 
